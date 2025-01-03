@@ -67,12 +67,6 @@ def save_research_config(api_keys):
     st.session_state.research_tavily_key = api_keys['tavily']
     st.session_state.research_config_saved = True
 
-def save_rag_config(config):
-    """Save RAG configuration."""
-    st.session_state.rag_pinecone_key = config['pinecone']
-    st.session_state.rag_openai_key = config['openai']
-    st.session_state.rag_config_saved = True
-    st.session_state.use_web_search = config['web_search']
 
 def research_config_section():
     """Configuration section for Company Research tab."""
@@ -272,45 +266,6 @@ def run_rag_with_streaming(retriever, question, llm, enable_web_search=False):
     except Exception as e:
         yield f"I encountered an error while processing your question: {str(e)}"
 
-def rag_config_section():
-    """Configuration section for RAG tab."""
-    st.markdown("### ⚙️ Configuration")
-    
-    with st.expander("API Configuration", expanded=not st.session_state.rag_config_saved):
-        col1, col2 = st.columns(2)
-        with col1:
-            pinecone_key = st.text_input(
-                "Pinecone API Key",
-                type="password",
-                value=st.session_state.get('rag_pinecone_key', ''),
-                key="rag_pinecone_input"
-            )
-        with col2:
-            openai_key = st.text_input(
-                "OpenAI API Key",
-                type="password",
-                value=st.session_state.get('rag_openai_key', ''),
-                key="rag_openai_input"
-            )
-        
-        web_search = st.checkbox(
-            "Enable Web Search",
-            value=st.session_state.get('use_web_search', False),
-            help="Allow the agent to search the web for additional context"
-        )
-        
-        if st.button("Save RAG Configuration", key="save_rag_config"):
-            if pinecone_key and openai_key:
-                save_rag_config({
-                    'pinecone': pinecone_key,
-                    'openai': openai_key,
-                    'web_search': web_search
-                })
-                # Initialize Pinecone client
-                st.session_state.pinecone_client = initialize_pinecone(pinecone_key)
-                st.success("✅ RAG configuration saved!")
-            else:
-                st.error("Please provide both API keys.")
 
 def document_upload_section():
     """Document upload section for RAG tab."""
@@ -341,9 +296,62 @@ def document_upload_section():
             st.session_state.documents_processed = False
             st.rerun()
 
+# Update the save_rag_config function to remove web_search
+def save_rag_config(config):
+    """Save RAG configuration."""
+    st.session_state.rag_pinecone_key = config['pinecone']
+    st.session_state.rag_openai_key = config['openai']
+    st.session_state.rag_config_saved = True
+
+# Update the rag_config_section to remove web_search checkbox
+def rag_config_section():
+    """Configuration section for RAG tab."""
+    st.markdown("### ⚙️ Configuration")
+    
+    with st.expander("API Configuration", expanded=not st.session_state.rag_config_saved):
+        col1, col2 = st.columns(2)
+        with col1:
+            pinecone_key = st.text_input(
+                "Pinecone API Key",
+                type="password",
+                value=st.session_state.get('rag_pinecone_key', ''),
+                key="rag_pinecone_input"
+            )
+        with col2:
+            openai_key = st.text_input(
+                "OpenAI API Key",
+                type="password",
+                value=st.session_state.get('rag_openai_key', ''),
+                key="rag_openai_input"
+            )
+        
+        if st.button("Save RAG Configuration", key="save_rag_config"):
+            if pinecone_key and openai_key:
+                save_rag_config({
+                    'pinecone': pinecone_key,
+                    'openai': openai_key
+                })
+                # Initialize Pinecone client
+                st.session_state.pinecone_client = initialize_pinecone(pinecone_key)
+                st.success("✅ RAG configuration saved!")
+            else:
+                st.error("Please provide both API keys.")
+
+# Update the chat_interface function to include web search toggle
 def chat_interface():
-    """Enhanced chat interface with streaming responses."""
+    """Enhanced chat interface with streaming responses and web search toggle."""
     st.markdown("### 💬 Chat Interface")
+    
+    # Add web search toggle in the chat interface
+    col1, col2 = st.columns([3, 1])
+    with col2:
+        web_search = st.checkbox(
+            "🌐 Enable Web Search",
+            value=st.session_state.get('use_web_search', False),
+            help="Toggle web search for additional context",
+            key="web_search_toggle"
+        )
+    st.session_state.use_web_search = web_search
     
     # Chat container with messages
     chat_container = st.container()

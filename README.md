@@ -106,31 +106,126 @@ To configure the application, follow these steps:
 
 ---
 
+
 ## Workflow
 
-The following diagram illustrates the workflow of the Research & RAG Assistant:
+### **Company Research Workflow**
+![Workflow Diagram](./research-workflow.png)
 
-![Workflow Diagram](https://via.placeholder.com/800x400.png?text=Workflow+Diagram)
+#### 1. **Input Phase**
+- **User Inputs**:  
+  - The user enters the company's name (e.g., "Tesla") and the industry (e.g., "Automotive").
+  - The system validates these inputs to ensure they are correctly specified.
+  
+---
 
-### Step-by-Step Workflow
+#### 2. **Research Phase**
+- **Web Search and Data Gathering**:  
+  - The system uses the Tavily API to crawl and gather publicly available information about the company and industry from the web.  
+  - It filters out irrelevant or redundant data, retaining only high-quality and relevant information.  
 
-1. **API Key Configuration**:
-   - User enters OpenAI, Tavily, and Pinecone API keys in the app configuration section.
+- **Natural Language Processing (NLP)**:  
+  - NLP models analyze the retrieved content to identify key insights about the company’s operations, market position, and current industry trends.  
 
-2. **Company Research Process**:
-   - User provides a company name and industry.
-   - The system performs web searches, analyzes data, and generates a detailed PDF report.
+---
 
-3. **Document Q&A Process**:
-   - User uploads documents in supported formats.
-   - The system processes and stores document data in Pinecone.
-   - User interacts with the chat interface to ask questions.
-   - The system retrieves relevant document content and optionally uses web search for additional context.
+#### 3. **AI Opportunity Analysis**
+- **Identifying Use Cases**:  
+  - The system evaluates four core areas for AI opportunities:  
+    1. **Internal Process Optimization**: How AI can make operations more efficient.  
+    2. **Customer Experience Enhancement**: AI-driven improvements in serving customers.  
+    3. **Product Innovation**: Developing new or enhanced products/services using AI.  
+    4. **Data Analytics**: Leveraging AI for better decision-making.
 
-4. **Output Delivery**:
-   - PDF reports for company research are available for download.
-   - Chat responses are displayed in real-time, combining document and web knowledge.
+- **Feasibility Analysis**:  
+  - The system assesses the benefits, resource requirements, and potential challenges for each opportunity.  
 
+---
+
+#### 4. **Resource Discovery**
+- **Curated Resources**:  
+  - The system searches for datasets, tools, and platforms that can support the identified AI use cases.  
+  - It also identifies example projects and implementation frameworks that can serve as references.  
+
+---
+
+#### 5. **Report Generation**
+- **Natural Language Generation (NLG)**:  
+  - A human-readable report is generated using advanced NLG models.  
+
+- **Report Contents**:  
+  - **Executive Summary**: High-level findings and actionable recommendations.  
+  - **Industry Analysis**: Comprehensive insights into market opportunities.  
+  - **AI Implementation Opportunities**: Detailed use cases and their feasibility.  
+  - **Implementation Roadmap**: A 12-month action plan, broken into four phases:
+    - **Months 1-3**: Initial Setup  
+    - **Months 4-7**: Development  
+    - **Months 8-9**: Pilot Testing  
+    - **Months 10-12**: Full Implementation  
+  - **Resource Catalog**: A curated list of tools, datasets, and references.  
+
+---
+
+#### 6. **Output Delivery**
+- The generated report is compiled into a PDF for download.  
+- Users can access the identified resources and implementation roadmap directly.  
+
+---
+
+### **Document Q&A Workflow**
+![Workflow Diagram](./Adaptive%20RAG.png)
+#### 1. **Input Phase**
+- **Upload Documents**:  
+  - The user uploads documents in supported formats such as PDF, DOCX, PPTX, or Markdown.  
+  - Multiple documents can be uploaded simultaneously for analysis.  
+
+---
+
+#### 2. **Document Processing**
+- **Semantic Chunking**:  
+  - The system breaks down the documents into meaningful chunks for efficient retrieval.  
+- **Vector Embeddings**:  
+  - Each chunk is converted into vector embeddings using advanced multilingual models.  
+
+- **Storage in Pinecone**:  
+  - The processed document chunks are stored in Pinecone's vector database for fast and accurate retrieval.  
+
+---
+
+#### 3. **Query Phase**
+- **User Queries**:  
+  - Users can type questions related to the content of the uploaded documents.  
+  - The system validates and preprocesses the query for efficient retrieval.  
+
+- **Document Retrieval**:  
+  - Relevant document chunks are retrieved from Pinecone based on semantic similarity to the query.  
+
+---
+
+#### 4. **Answer Generation**
+- **Combining Information**:  
+  - Retrieved document content is combined with context from the query.  
+- **Language Model Response**:  
+  - OpenAI’s language model generates a human-like, detailed answer to the query.  
+
+- **Optional Web Search**:  
+  - If enabled, the system supplements document-based answers with information retrieved from the web for enhanced accuracy and depth.  
+
+---
+
+#### 5. **Output Delivery**
+- **Streaming Responses**:  
+  - The system streams answers in real-time, simulating a natural conversation experience.  
+- **Interactive Chat Interface**:  
+  - Users can ask follow-up questions for clarification or additional details.  
+
+--- 
+
+#### **Key Advantages of the Workflow**  
+1. **Efficiency**: Handles large document sets and generates responses quickly.  
+2. **Accuracy**: Combines document retrieval and web search for high-quality answers.  
+3. **Interactivity**: Supports natural, conversational question-answering.  
+4. **Scalability**: Can process and retrieve information from extensive document collections.  
 ---
 
 ## Demo Link
