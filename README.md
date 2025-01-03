@@ -43,8 +43,8 @@ Follow these steps to set up the Research & RAG Assistant on your local machine:
 
 1. **Clone the Repository**:
    ```bash
-   git clone https://github.com/your-username/research-rag-assistant.git
-   cd research-rag-assistant
+   git clone https://github.com/anindyamitra2002/Multi-Agent-Research-and-RAG-System.git
+   cd Multi-Agent-Research-and-RAG-System
    ```
 
 2. **Create a Virtual Environment**:

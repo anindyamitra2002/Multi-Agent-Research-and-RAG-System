@@ -21,3 +21,4 @@ pinecone
 streamlit
 markdown2 
 xhtml2pdf
+PyPDF2
