@@ -56,6 +56,8 @@ Follow these steps to set up the Research & RAG Assistant on your local machine:
 3. **Install Dependencies**:
    ```bash
    pip install -r requirements.txt
+   playwright install
+   export PYTHONPATH=.
    ```
 
 4. **Run the Application**:
